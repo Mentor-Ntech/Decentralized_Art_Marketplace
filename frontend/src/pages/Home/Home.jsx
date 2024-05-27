@@ -5,6 +5,7 @@ import Hero from '../../components/Hero/Hero';
 import Networks from '../../components/Networks/Networks';
 import Trade from '../../components/Trade/Trade';
 import CanvasAnimation from '../../components/Canvas/CanvasAnimation';
+import ArtContent from '../../components/ArtContent/ArtContent';
 
 const Home = () => {
   const canvasRef = useRef(null);
@@ -130,6 +131,9 @@ const Home = () => {
         {/* <div>
           <CanvasAnimation/>
         </div> */}
+        <div>
+          <ArtContent/>
+        </div>
       </div>
     </div>
   );
