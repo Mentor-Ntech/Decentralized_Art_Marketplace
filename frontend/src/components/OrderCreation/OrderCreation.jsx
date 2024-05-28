@@ -1,18 +1,26 @@
-import React, { useState } from "react";
-import ArtLogo from "../../assets/orderImg.jpeg";
-import ArtOne from "../../assets/artContentTwo.jpeg";
-import ArtTwo from "../../assets/artContentThree.webp";
-import ArtThree from "../../assets/artContentFour.webp";
-import "./OrderCreation.css";
+import React, { useState, useEffect } from 'react';
+import ArtLogo from '../../assets/orderImg.jpeg';
+import './OrderCreation.css';
+import { addArt, getAllArts } from '../../utils/db';
 
 const OrderCreation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     image: null,
-    title: "",
-    description: "",
-    price: ""
+    title: '',
+    description: '',
+    price: ''
   });
+  const [arts, setArts] = useState([]);
+
+  useEffect(() => {
+    const fetchArts = async () => {
+      const savedArts = await getAllArts();
+      setArts(savedArts);
+    };
+
+    fetchArts();
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -28,13 +36,14 @@ const OrderCreation = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+    setFormData({ ...formData, image: URL.createObjectURL(e.target.files[0]) });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Add logic to handle form submission
+    await addArt(formData);
+    const savedArts = await getAllArts();
+    setArts(savedArts);
     closeModal();
   };
 
@@ -57,69 +66,26 @@ const OrderCreation = () => {
       </div>
 
       <section className="artSection">
-        {/* Art Items */}
-        <div className="artSection-one">
+        {arts.map((art) => (
+          <div key={art.id} className="artSection-one">
             <p>Unsold</p>
-            <img src={ArtOne} alt="" />
+            <img src={art.image} alt={art.title} />
             <div className="artTag">
-                <div>
-                    <h2>#Price</h2>
-                </div>
-                <div>
-                    <h2>Title</h2>
-                </div>
+              <div>
+                <h2>{art.price}</h2>
+              </div>
+              <div>
+                <h2>{art.title}</h2>
+              </div>
             </div>
             <div className="artTag">
-                <div>
-                    <h2>View Des..</h2>
-                </div>
-                <button className="artTag-btn">
-                    Buy Art
-                </button>
+              <div>
+                <h2>View Des..</h2>
+              </div>
+              <button className="artTag-btn">Buy Art</button>
             </div>
-        </div>
-
-        <div className="artSection-one">
-        <p>Unsold</p>
-            <img src={ArtTwo} alt="" />
-            <div className="artTag">
-                <div>
-                    <h2>#Price</h2>
-                </div>
-                <div>
-                    <h2>Title</h2>
-                </div>
-            </div>
-            <div className="artTag">
-                <div>
-                    <h2>View Des..</h2>
-                </div>
-                <button className="artTag-btn">
-                    Buy Art
-                </button>
-            </div>
-        </div>
-
-        <div className="artSection-one">
-        <p>Unsold</p>
-            <img src={ArtThree} alt="" />
-            <div className="artTag">
-                <div>
-                    <h2>#Price</h2>
-                </div>
-                <div>
-                    <h2>Title</h2>
-                </div>
-            </div>
-            <div className="artTag">
-                <div>
-                    <h2>View Des..</h2>
-                </div>
-                <button className="artTag-btn">
-                    Buy Art
-                </button>
-            </div>
-        </div>
+          </div>
+        ))}
       </section>
 
       {isModalOpen && (
