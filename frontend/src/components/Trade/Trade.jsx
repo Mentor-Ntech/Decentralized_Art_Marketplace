@@ -8,6 +8,7 @@ import netTwo from "../../assets/ava.png"
 import netThree from "../../assets/lisk.jpeg"
 import netFour from "../../assets/op.svg"
 import netFive from "../../assets/poly.webp"
+import { Link } from 'react-router-dom'
 import "./Trade.css"
 
 const Trade = () => {
@@ -16,7 +17,9 @@ const Trade = () => {
       <div className='trade'>
         <div className='first-trade'>
             <h1>Trade Your Art on ArtChain</h1>
-            <button className='trade-button'>Trade</button>
+            <Link to='/orderCreation'>
+              <button className='trade-button'>Trade</button>
+            </Link>
         </div>
         <div className='second-trade'>
             <img src={tradeImg} alt="" />

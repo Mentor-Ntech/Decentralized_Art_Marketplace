@@ -2,16 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 3rem;
-    margin-left: 17rem;
-    /* justify-content: space-around; */
+    justify-content: center; /* Center content horizontally */
     margin-top: 8rem;
+    margin-left: 0; /* Reset margin left */
 }
 
 .artcontent-item {
     position: relative;
     background: yellow;
     text-align: center;
-    margin: 1rem;
+    margin: 0; /* Reset margin for better control with gap */
 }
 
 .artcontent-item h1 {
@@ -60,8 +60,8 @@
 
 /* Media Queries */
 @media (min-width: 1400px) {
-    .artcontent-item {
-        margin: 0.5rem;  /* Reduced margin for larger screens */
+    .artcontent {
+        gap: 2rem;  /* Reduced gap for larger screens */
     }
     .image-container {
         width: 24rem;
@@ -70,8 +70,8 @@
 }
 
 @media (max-width: 1200px) {
-    .artcontent-item {
-        margin: 0.75rem;  /* Slightly reduced margin */
+    .artcontent {
+        gap: 1.5rem;  /* Slightly reduced gap */
     }
     .image-container {
         width: 24rem;
@@ -80,8 +80,8 @@
 }
 
 @media (max-width: 992px) {
-    .artcontent-item {
-        margin: 1rem;  /* Default margin */
+    .artcontent {
+        gap: 1rem;  /* Default gap */
     }
     .image-container {
         width: 20rem;
@@ -93,6 +93,7 @@
     .artcontent {
         flex-direction: column;
         align-items: center;
+        gap: 1.5rem; /* Increased gap for stacked items */
     }
     .image-container {
         width: 80%;
