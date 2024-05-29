@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const artSchema = new mongoose.Schema({
-  image: String,
-  title: String,
-  description: String,
-  price: Number
+  image: { type: String, required: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Art', artSchema);

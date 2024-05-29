@@ -10,14 +10,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = 'mongodb+srv://ayofe70:Adebayo20@cluster0.fgluhet.mongodb.net/artmarketplace';
 
+// Connect to MongoDB
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch(err => {
-  console.error('Failed to connect to MongoDB', err);
-});
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('Failed to connect to MongoDB', err);
+  });
 
 // Create 'uploads' directory if it doesn't exist
 const uploadDir = path.join(__dirname, 'uploads');
@@ -32,8 +35,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(uploadDir));
 
+// Art routes
 app.use('/api/arts', artRoutes);
 
+// In-memory status storage (replace with database implementation as needed)
+let artStatus = {}; 
+let buyArtStatus = {};
+
+// Routes for artStatus and buyArtStatus
+app.get('/api/artStatus', (req, res) => {
+  res.json(artStatus);
+});
+
+app.post('/api/artStatus', (req, res) => {
+  artStatus = req.body;
+  res.status(200).json({ message: 'Art status updated successfully' });
+});
+
+app.get('/api/buyArtStatus', (req, res) => {
+  res.json(buyArtStatus);
+});
+
+app.post('/api/buyArtStatus', (req, res) => {
+  buyArtStatus = req.body;
+  res.status(200).json({ message: 'Buy art status updated successfully' });
+});
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
