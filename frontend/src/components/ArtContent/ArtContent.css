@@ -21,7 +21,7 @@
 .image-container {
     position: relative;
     width: 28rem;  /* Adjusted for larger screens */
-    height: 20rem; /* Adjusted for larger screens */
+    height: 20rem; 
 }
 
 .image-container img {

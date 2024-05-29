@@ -1,0 +1,7 @@
+.artTag-btn-success {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: not-allowed;
+}
