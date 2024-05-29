@@ -36,12 +36,18 @@ const OrderCreation = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: URL.createObjectURL(e.target.files[0]) });
+    setFormData({ ...formData, image: e.target.files[0] });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addArt(formData);
+    const data = new FormData();
+    data.append('image', formData.image);
+    data.append('title', formData.title);
+    data.append('description', formData.description);
+    data.append('price', formData.price);
+
+    await addArt(data);
     const savedArts = await getAllArts();
     setArts(savedArts);
     closeModal();
@@ -67,9 +73,9 @@ const OrderCreation = () => {
 
       <section className="artSection">
         {arts.map((art) => (
-          <div key={art.id} className="artSection-one">
+          <div key={art._id} className="artSection-one">
             <p>Unsold</p>
-            <img src={art.image} alt={art.title} />
+            <img src={`http://localhost:5000/${art.image}`} alt={art.title} />
             <div className="artTag">
               <div>
                 <h2>{art.price}</h2>
@@ -80,7 +86,7 @@ const OrderCreation = () => {
             </div>
             <div className="artTag">
               <div>
-                <h2>View Des..</h2>
+                <h2>{art.description}</h2>
               </div>
               <button className="artTag-btn">Buy Art</button>
             </div>
